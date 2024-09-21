@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: sample-webflux-websocket-netty
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      #key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: myGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+    listener:
+      type: single
+    main:
+      banner-mode: "OFF"
+
+config:
+  stocks:
+    - AAPL
+    - ARE
+    - GOOG
+  payload: "{\"type\":\"subscribe\",\"symbol\":\"STOCK\"}"
+
+logging:
+    level:
+      root: INFO
+    file:
+      name: log/sample-webflux-websocket-netty.log
+
+server:
+    port: 8001
+
+sample:
+    path: /test
+    send-interval: 500
